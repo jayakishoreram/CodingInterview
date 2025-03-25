@@ -1,57 +1,40 @@
 package com.leetcode.string;
 
-import java.util.Arrays;
-import java.util.Optional;
-
 public class LongestCommonPrefix {
+
     public static void main(String[] args) {
-        String[] s = {"flower","floor","fl"};
-        String prefix = longestCommonPrefix_2(s);
-        System.out.println(prefix);
+        String[] words = {"AB", "A"};
+        System.out.println(findLongestCommonPrefix2(words));
     }
 
-    public String longestCommonPrefix(String[] strs) {
-
-        char[] fw = strs[0].toCharArray();
-        String prefix = "";
-        int i = 0;
-        for(char c: fw){
-            boolean isExist = true;
-            for(String s: strs){
-                if((s.length() < i) || (s.charAt(i) != c)){
-                    isExist = false;
-                    System.out.println(i + " " +s.charAt(i) +" "+c);
+    private static String findLongestCommonPrefix(String[] words){
+        StringBuilder prefix = new StringBuilder();
+        char[] c =  words[0].toCharArray();
+        for(int i = 0; i < c.length; i++){
+            for(int j = 1; j < words.length; j++){
+                if(words[j].length() <= i || c[i] != words[j].toCharArray()[i]){
+                    return prefix.toString();
                 }
+                prefix.append(c[i]);
             }
-            i++;
-            if(!isExist){
-                return prefix;
-            }else{
-                prefix += c;
+        }
+        return prefix.toString();
+    }
+
+    //Optimistic implementation
+    private static String findLongestCommonPrefix2(String[] words) {
+        if(words == null || words.length == 0) {
+            return "";
+        }
+        String prefix = words[0];
+        for(int i = 1; i < words.length; i++) {
+            while(words[i].indexOf(prefix) != 0) {
+                prefix = prefix.substring(0, prefix.length()-1);
+                if(prefix.isEmpty()) {
+                    return "";
+                }
             }
         }
         return prefix;
-    }
-
-    private static String longestCommonPrefix_2(String[] sArray){
-        Optional<String> min = Arrays.stream(sArray).sorted().findFirst();
-        String shortString = min.get();
-        StringBuilder b = new StringBuilder();
-        for(Character c : shortString.toCharArray()){
-            b.append(c+"");
-            boolean isPrefix = true;
-            for(String s: sArray){
-                if(!s.startsWith(b.toString())){
-                    isPrefix = false;
-                    break;
-                };
-            }
-            if(isPrefix) {
-                b.toString();
-            }else {
-                return b.toString().substring(0, b.length()-1);
-            }
-        }
-        return b.toString();
     }
 }

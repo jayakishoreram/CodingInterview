@@ -4,30 +4,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RomanToInteger {
-    static Map<String, Integer> romMap = new HashMap<>();
 
+    static Map<String, Integer> romanMap = new HashMap<>();
     static{
-        romMap.put("I", 1);
-        romMap.put("V", 5);
-        romMap.put("X", 10);
-        romMap.put("L", 50);
-        romMap.put("C", 100);
-        romMap.put("D", 500);
-        romMap.put("M", 1000);
+        romanMap.put("I", 1);
+        romanMap.put("V", 5);
+        romanMap.put("X", 1);
+        romanMap.put("L", 50);
+        romanMap.put("C", 100);
+        romanMap.put("D", 500);
+        romanMap.put("M", 1000);
     }
-    public int romanToInt(String s) {
-        int result = 0;
-        for(char c : s.toCharArray()){
-            result += romMap.get(c+"");
-        }
 
-        for(int i = 1; i< s.length(); i++){
-            if(romMap.get(s.charAt(i - 1) + "") < romMap.get(s.charAt(i) + "")){
-                result -= romMap.get(s.charAt(i - 1) + "");
-                result -= romMap.get(s.charAt(i - 1) + "");
+    public static void main(String[] args) {
+        System.out.println(romanToInteger("IV"));
+    }
+
+    /*
+    1. Add all character values
+    2. if left char value is less than right character, then we need to subtract the double
+        value from result.
+     */
+
+    private static int romanToInteger(String roman){
+        int result = 0;
+        char[] romanArray = roman.toCharArray();
+        for(char c : romanArray){
+            result += romanMap.get(c+ "");
+        }
+        for(int i = 1; i < romanArray.length; i++){
+            if(romanMap.get(romanArray[i - 1] + "") < romanMap.get(romanArray[i] + "")){
+                result-=  romanMap.get(romanArray[i -1] + "")*2;
             }
         }
-
         return result;
     }
 }

@@ -6,7 +6,6 @@ public class TestJava {
     }
 
     private int len(int[] array){
-        int 
         for(int i = 0; i< array.length; i++){
             int pos = array[i];
 
