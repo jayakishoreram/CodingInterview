@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 
 public class Combinations {
     public static void main(String[] args) {
-        System.out.println(combinations(3, 2));
+        System.out.println(combinations(4, 3));
     }
 
     private static List<List<Integer>> combinations(int n, int numberOfElementsPerSet){
@@ -34,6 +34,7 @@ public class Combinations {
     }
 
     private static void backTrack(Integer position, List<Integer> numbers, Integer numberOfElementsPerSet, List<List<Integer>> result, List<Integer> elementCombination){
+        //System.out.println("EC: " + elementCombination);
         if(elementCombination.size() == numberOfElementsPerSet){
             result.add(List.copyOf(elementCombination));
             return;
@@ -41,7 +42,8 @@ public class Combinations {
         for(int i = position; i < numbers.size(); i++) {
             //int finalI = i;
             //if(!elementCombination.contains(numbers.get(i)) && elementCombination.stream().noneMatch(element -> element >= numbers.get(finalI))) {
-                elementCombination.add(numbers.get(i));
+            elementCombination.add(numbers.get(i));
+            System.out.println("EC1****: " + elementCombination);
                 backTrack(i + 1, numbers, numberOfElementsPerSet, result, elementCombination);
                 elementCombination.removeLast();
            // }
